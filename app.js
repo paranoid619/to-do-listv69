@@ -10,7 +10,7 @@ const app = express();
 
 app.set('view engine', 'ejs');
 
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
 
 mongoose.connect("mongodb+srv://admin-sourav:souravkumar@cluster0.n8p1m.mongodb.net/todolistDB", {useNewUrlParser: true, useUnifiedTopology: true});
@@ -77,7 +77,7 @@ res.redirect("/");
 
   app.get("/:customListName",function(req,res){
 
-    const customListName = _.capitalize(req.params.customListName);
+   const customListName = _.capitalize(req.params.customListName);
 
     List.findOne({name : customListName},function(err,foundList){
       if(!err){
@@ -101,15 +101,8 @@ res.redirect("/");
   });
 
 
-  
 
 
-
- 
-
-      
-        
- 
 
 app.post("/", function(req, res){
 
@@ -163,10 +156,11 @@ app.get("/about", function(req, res){
   res.render("about");
 });
 
+let port = process.env.PORT;
+if(port == null || port == ""){
+  port = 3000;
+}
  
-app.listen(process.env.PORT || 3000, function(){
-  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
-});
 
 app.listen(port, function() {
   console.log("Server started successfully");
